@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ePuzzle</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐻</text></svg>">
+</head>
+    <body>
+        <div class="header">
+            <button id="fullscreen-button">Fullscreen</button>
+            <details id="menu">
+                <summary>Settings</summary>
+                <div class="menu-content">
+                    <div class="tag-column">
+                        <p>-Species-</p>
+                        <label><input type="checkbox" name="tags" value="bear">Bear</label>
+                        <label><input type="checkbox" name="tags" value="boar">Boar</label>
+                        <label><input type="checkbox" name="tags" value="bull">Bull</label>
+                        <label><input type="checkbox" name="tags" value="wolf">Wolf</label>
+                        <label><input type="checkbox" name="tags" value="dog">Dog</label>
+                        <label><input type="checkbox" name="tags" value="lion">Lion</label>
+                        <label><input type="checkbox" name="tags" value="tiger">Tiger</label>
+                        <label><input type="checkbox" name="tags" value="elephant">Elephant</label>
+                    </div>
+                    <div class="tag-column">
+                        <p>-Attributes-</p>
+                        <label><input type="checkbox" name="tags" value="belly">Belly</label>
+                        <label><input type="checkbox" name="tags" value="fat">Fat</label>
+                        <label><input type="checkbox" name="tags" value="musclegut">Musclegut</label>
+                        <label><input type="checkbox" name="tags" value="underwear">Underwear</label>
+                        <label><input type="checkbox" name="tags" value="jockstrap">Jockstrap</label>
+                        <label><input type="checkbox" name="tags" value="tank_top">Tank Top</label>
+                        <label><input type="checkbox" name="tags" value="socks">Socks</label>
+                        <label><input type="checkbox" name="tags" value="open_bottomwear">Open Bottomwear</label>
+                    </div>
+                    <div class="tag-column">
+                        <p>-Fetishes-</p>
+                        <label><input type="checkbox" name="tags" value="messy">Messy</label>
+                        <label><input type="checkbox" name="tags" value="urine">Urine</label>
+                        <label><input type="checkbox" name="tags" value="armpit_hair">Armpit hair</label>
+                        <label><input type="checkbox" name="tags" value="licking">Licking</label>
+                        <label><input type="checkbox" name="tags" value="sniffing">Sniffing</label>
+                    </div>
+                    <div class="tag-column">
+                        <p>-Lore-</p>
+                        <label><input type="checkbox" name="tags" value="father_(lore)">Father</label>
+                        <p>------</p>
+                        <label><input type="checkbox" name="gif-only" id="gif-only" value="type:gif">GIF only</label>
+                    </div>
+                    <div class="full-width">
+                        <input type="text" id="blacklist" placeholder="Blacklist ,">
+                        <input type="text" id="custom-tags" placeholder="Tags ,">
+                    </div>
+                </div>
+            </details>
+            <button id="next-button">Next</button>
+        </div>
+        <div id="puzzle-wrapper">
+            <div id="puzzle-container"></div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
