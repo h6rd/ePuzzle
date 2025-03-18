@@ -1,74 +1,116 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ePuzzle</title>
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded">
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐻</text></svg>">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
-    <body>
-        <video autoplay muted loop id="background-video">
-            <source src="assets/bg/lofi_13.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="header">
-            <button id="fullscreen-button">Fullscreen</button>
-            <details id="menu">
-                <summary>Settings</summary>
-                <div class="menu-content">
-                    <div class="tag-column">
-                        <p>-Species-</p>
-                        <label><input type="checkbox" name="tags" value="bear">Bear</label>
-                        <label><input type="checkbox" name="tags" value="boar">Boar</label>
-                        <label><input type="checkbox" name="tags" value="bull">Bull</label>
-                        <label><input type="checkbox" name="tags" value="canid">Wolf/Dog</label>
-                        <label><input type="checkbox" name="tags" value="felid">Tiger/Lion/Cat</label>
-                        <label><input type="checkbox" name="tags" value="elephant">Elephant</label>
-                        <label><input type="checkbox" name="tags" value="dragon">Dragon</label>
-                        <label><input type="checkbox" name="tags" value="horse">Horse</label>
-                    </div>
-                    <div class="tag-column">
-                        <p>-Attributes-</p>
-                        <label><input type="checkbox" name="tags" value="belly">Belly</label>
-                        <label><input type="checkbox" name="tags" value="fat">Fat</label>
-                        <label><input type="checkbox" name="tags" value="musclegut" checked>Musclegut</label>
-                        <label><input type="checkbox" name="tags" value="underwear">Underwear</label>
-                        <label><input type="checkbox" name="tags" value="jockstrap">Jockstrap</label>
-                        <label><input type="checkbox" name="tags" value="tank_top">Tank Top</label>
-                        <label><input type="checkbox" name="tags" value="socks">Socks</label>
-                        <label><input type="checkbox" name="tags" value="open_bottomwear">Open Bottomwear</label>
-                    </div>
-                    <div class="tag-column">
-                        <p>-Fetishes-</p>
-                        <label><input type="checkbox" name="tags" value="urine">Urine</label>
-                        <label><input type="checkbox" name="tags" value="bulge">Bulge</label>
-                        <label><input type="checkbox" name="tags" value="messy">Messy</label>
-                        <label><input type="checkbox" name="tags" value="armpit_hair">Armpit hair</label>
-                        <label><input type="checkbox" name="tags" value="licking">Licking</label>
-                        <label><input type="checkbox" name="tags" value="blowhob">Blowjob</label>
-                        <label><input type="checkbox" name="tags" value="footjob">Footjob</label>
-                        <label><input type="checkbox" name="tags" value="sniffing">Sniffing</label>
-                    </div>
-                    <div class="tag-column">
-                        <p>-Lore-</p>
-                        <label><input type="checkbox" name="tags" value="father_(lore)">Father</label>
-                        <label><input type="checkbox" name="tags" value="mature_male">Mature male</label>
-                        <p>------</p>
-                        <label><input type="checkbox" name="gif-only" id="gif-only" value="type:gif">GIF only</label>
-                    </div>
-                    <div class="full-width">
-                        <input type="text" id="blacklist" placeholder="Blacklist ,">
-                        <input type="text" id="custom-tags" placeholder="Tags ,">
-                    </div>
+<body>
+    <video autoplay muted loop id="background-video">
+        <source src="assets/bg/1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <audio id="background-audio" loop preload="metadata">
+        <source src="https://streams.fluxfm.de/Chillhop/mp3-128/streams.fluxfm.de/" type="audio/mp3">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <div class="floating-bar">
+        <button id="tags-button" title="Tags">
+            <span class="material-symbols-rounded">bookmark</span>
+        </button>
+        <button id="next-button" title="Refresh">
+            <span class="material-symbols-rounded">refresh</span>
+        </button>
+        <button id="settings-button" title="Settings">
+            <span class="material-symbols-rounded">wallpaper</span>
+        </button>
+        <div class="divider"></div>
+        <div class="music-controls">
+            <button id="play-pause-button" title="Play/Pause">
+                <span class="material-symbols-rounded play-icon">play_arrow</span>
+                <span class="material-symbols-rounded pause-icon" style="display: none;">pause</span>
+            </button>
+            <input type="range" id="volume-slider" min="0" max="0.6" step="0.1" value="0.1">
+        </div>
+
+        <div id="tags-menu" class="dropdown-menu">
+            <div class="menu-content">
+                <div class="tag-column">
+                    <p>Species</p>
+                    <label><input type="checkbox" name="tags" value="bear">Bear</label>
+                    <label><input type="checkbox" name="tags" value="boar">Boar</label>
+                    <label><input type="checkbox" name="tags" value="bull">Bull</label>
+                    <label><input type="checkbox" name="tags" value="canid">Wolf/Dog</label>
+                    <label><input type="checkbox" name="tags" value="felid">Tiger/Lion/Cat</label>
+                    <label><input type="checkbox" name="tags" value="elephant">Elephant</label>
+                    <label><input type="checkbox" name="tags" value="dragon">Dragon</label>
+                    <label><input type="checkbox" name="tags" value="horse">Horse</label>
                 </div>
-            </details>
-            <button id="next-button">Reload / Next</button>
+                <div class="tag-column">
+                    <p>Attributes</p>
+                    <label><input type="checkbox" name="tags" value="belly">Belly</label>
+                    <label><input type="checkbox" name="tags" value="fat">Fat</label>
+                    <label><input type="checkbox" name="tags" value="musclegut" checked>Musclegut</label>
+                    <label><input type="checkbox" name="tags" value="underwear">Underwear</label>
+                    <label><input type="checkbox" name="tags" value="jockstrap">Jockstrap</label>
+                    <label><input type="checkbox" name="tags" value="tank_top">Tank Top</label>
+                    <label><input type="checkbox" name="tags" value="socks">Socks</label>
+                    <label><input type="checkbox" name="tags" value="open_bottomwear">Open Bottomwear</label>
+                </div>
+                <div class="tag-column">
+                    <p>Fetishes</p>
+                    <label><input type="checkbox" name="tags" value="urine">Urine</label>
+                    <label><input type="checkbox" name="tags" value="bulge">Bulge</label>
+                    <label><input type="checkbox" name="tags" value="messy">Messy</label>
+                    <label><input type="checkbox" name="tags" value="armpit_hair">Armpit hair</label>
+                    <label><input type="checkbox" name="tags" value="licking">Licking</label>
+                    <label><input type="checkbox" name="tags" value="fellatio">Blowjob</label>
+                    <label><input type="checkbox" name="tags" value="footjob">Footjob</label>
+                    <label><input type="checkbox" name="tags" value="sniffing">Sniffing</label>
+                </div>
+                <div class="tag-column">
+                    <p>Lore</p>
+                    <label><input type="checkbox" name="tags" value="father_(lore)">Father</label>
+                    <label><input type="checkbox" name="tags" value="mature_male">Mature male</label>
+                </div>
+                <div class="tag-column">
+                    <p>Other</p>
+                    <label><input type="checkbox" name="tags" value="male" checked>Male</label>
+                    <label><input type="checkbox" name="tags" value="anthro" checked>Anthro</label>
+                </div>
+                <div class="tag-column">
+                    <p>Media type</p>
+                    <label><input type="checkbox" name="gif-only" id="gif-only" value="type:gif">GIF only</label>
+                </div>
+                <div class="full-width">
+                    <input type="text" id="blacklist" placeholder="Blacklist tags (wolf, obesity)">
+                    <input type="text" id="custom-tags" placeholder="Custom tags (bear, jockstrap)">
+                </div>
+                <footer class="footer">This shit made by <a href="https://steamcommunity.com/id/hrdq" id="hrdq">hrdq</a></footer>
+            </div>
         </div>
-        <div id="puzzle-wrapper">
-            <div id="puzzle-container"></div>
+
+        <div id="settings-menu" class="dropdown-menu">
+            <div class="menu-content">
+                <div class="wallpaper-preview">
+                    <img src="assets/bg/1.png" data-video="assets/bg/1.mp4" alt="1">
+                    <img src="assets/bg/2.png" data-video="assets/bg/2.mp4" alt="2">
+                    <img src="assets/bg/3.png" data-video="assets/bg/3.mp4" alt="3">
+                    <img src="assets/bg/4.png" data-video="assets/bg/4.mp4" alt="4">
+                    <img src="assets/bg/5.png" data-video="assets/bg/5.mp4" alt="5">
+                </div>
+            </div>
         </div>
-        <script src="assets/script.js"></script>
-    </body>
+    </div>
+    <script src="assets/script.js"></script>
+    <script src="assets/puzzle.js"></script>
+    <script src="assets/confetti.js"></script>
+</body>
 </html>
