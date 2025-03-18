@@ -1,4 +1,4 @@
-console.log('Скрипт puzzle.js загружен');
+console.log('puzzle.js loaded');
 
 const loadingIndicator = document.createElement('div');
 loadingIndicator.id = 'loading-indicator';
@@ -96,22 +96,22 @@ function safeBtoa(str) {
 async function loadBlacklistTags() {
     try {
         const response = await fetch('assets/blacklist.txt');
-        if (!response.ok) throw new Error('Не удалось загрузить blacklist.txt');
+        if (!response.ok) throw new Error('Failed to load blacklist.txt');
         const text = await response.text();
         const tags = text.split('\n')
             .map(tag => tag.trim())
             .filter(tag => tag.length > 0)
             .map(tag => `-${tag}`);
-        console.log('Теги черного списка из файла:', tags);
+        console.log('Blacklist tags from file:', tags);
         return tags;
     } catch (error) {
-        console.error('Ошибка загрузки blacklist.txt:', error);
+        console.error('Failed to load blacklist.txt:', error);
         return [];
     }
 }
 
 async function fetchImageFromE621(attempt = 1, maxAttempts = 5) {
-    console.log('Запуск fetchImageFromE621, попытка:', attempt);
+    console.log('Run fetchImageFromE621, attemp:', attempt);
 
     const positiveTags = [
         ...Array.from(document.querySelectorAll('input[name="tags"]:checked')).map(cb => cb.value),
@@ -150,11 +150,11 @@ async function fetchImageFromE621(attempt = 1, maxAttempts = 5) {
         const post = data.posts[0];
         if (!post) {
             if (attempt < maxAttempts) {
-                console.log('Посты не найдены, повторная попытка...');
+                console.log('No posts found, please try again...');
                 await new Promise(resolve => setTimeout(resolve, 2000));
                 return fetchImageFromE621(attempt + 1, maxAttempts);
             } else {
-                throw new Error('Достигнут лимит попыток: посты не найдены');
+                throw new Error('Attempt limit reached: no posts found');
             }
         }
         
@@ -170,14 +170,14 @@ async function fetchImageFromE621(attempt = 1, maxAttempts = 5) {
         await preloadImage(currentImage);
         startPuzzle();
     } catch (error) {
-        console.error('Ошибка загрузки изображения:', error);
+        console.error('Error loading image:', error);
         if (attempt < maxAttempts) {
-            console.log(`Попытка ${attempt} не удалась, повтор через 2 секунды...`);
+            console.log(`Attempt ${attempt} failed, repeat after 2 seconds...`);
             await new Promise(resolve => setTimeout(resolve, 2000));
             return fetchImageFromE621(attempt + 1, maxAttempts);
         } else {
-            console.error('Все попытки исчерпаны. Проверьте теги или API.');
-            alert('Не удалось загрузить изображение. Проверьте теги или подключение.');
+            console.error('Attempts are exhausted. Check the tags or API.');
+            alert('The image could not be uploaded. Check the tags or connection.');
         }
     }
 }
@@ -284,16 +284,16 @@ function drop(e) {
         draggedPiece.style.backgroundPosition = dropTarget.style.backgroundPosition;
         dropTarget.style.backgroundPosition = tempPos;
 
-        console.log('После перетаскивания:', {
+        console.log('After dragging:', {
             dragged: draggedPiece.style.backgroundPosition,
             target: dropTarget.style.backgroundPosition
         });
 
         if (isPuzzleSolved()) {
-            console.log('Пазл собран');
+            console.log('The puzzle is complete');
             showCompletionAnimation();
         } else {
-            console.log('Пазл еще не собран');
+            console.log('The puzzle has not been completed yet');
         }
     }
 }
@@ -321,17 +321,17 @@ function isPuzzleSolved() {
         const xMatch = Math.abs(origX - parseFloat(currX)) <= tolerance;
         const yMatch = Math.abs(origY - parseFloat(currY)) <= tolerance;
         if (!xMatch || !yMatch) {
-            console.log(`Несоответствие на куске ${index}: текущая позиция=${piece.style.backgroundPosition}, ожидаемая=${origX}px ${origY}px`);
+            console.log(`Inconsistency on the piece ${index}: current position=${piece.style.backgroundPosition}, expected=${origX}px ${origY}px`);
         }
         return xMatch && yMatch;
     });
 
-    console.log('Проверка завершения пазла:', solved);
+    console.log('Checking the completion of the puzzle:', solved);
     return solved;
 }
 
 function showCompletionAnimation() {
-    console.log('Запуск анимации завершения');
+    console.log('Starting the completion animation');
     isPuzzleCompleted = true;
     shootConfetti();
     const completeDiv = document.createElement('div');
@@ -341,7 +341,7 @@ function showCompletionAnimation() {
         <button id="next-puzzle">Next</button>
     `;
     puzzleContainer.appendChild(completeDiv);
-    console.log('Добавлен div.puzzle-complete');
+    console.log('Added div.puzzle-complete');
 
     if (isPuzzleCompleted) {
         const pieces = puzzleContainer.getElementsByClassName('puzzle-piece');
@@ -352,7 +352,7 @@ function showCompletionAnimation() {
 
     setTimeout(() => {
         completeDiv.style.opacity = '1';
-        console.log('Кнопки opacity: 1');
+        console.log('Buttons opacity: 1');
     }, 3000);
 
     const saveButton = document.getElementById('save-puzzle');
@@ -360,18 +360,18 @@ function showCompletionAnimation() {
     if (saveButton && nextButton) {
         saveButton.addEventListener('click', savePuzzle);
         nextButton.addEventListener('click', () => {
-            console.log('Переход к следующему пазлу');
+            console.log('Moving on to the next puzzle');
             puzzleContainer.innerHTML = '';
             fetchImageFromE621();
         });
-        console.log('Обработчики событий для кнопок привязаны');
+        console.log('Event handlers for buttons are linked');
     } else {
-        console.error('Кнопки не найдены в DOM');
+        console.error('Buttons not found in DOM');
     }
 }
 
 function savePuzzle() {
-    console.log('Скачивание изображения:', originalImageName);
+    console.log('Downloading an image:', originalImageName);
     const link = document.createElement('a');
     link.href = currentImage;
     link.download = originalImageName;
@@ -379,31 +379,31 @@ function savePuzzle() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    console.log('Инициировано скачивание или открытие в новой вкладке:', originalImageName);
+    console.log('Initiated downloading or opening in a new tab:', originalImageName);
 
     setTimeout(() => {
         if (document.location.href.includes(currentImage)) {
-            alert('Автоматическое скачивание не поддерживается. Изображение открыто в новой вкладке. Нажмите правой кнопкой мыши и выберите "Сохранить как", чтобы скачать.');
+            alert('Open the image in a new tab. Right-click and select "Save as" to download.');
         } else {
-            console.log('Скачивание успешно инициировано');
+            console.log('Download successfully initiated');
         }
     }, 100);
 }
 
 document.getElementById('next-button').addEventListener('click', () => {
-    console.log('Клик по кнопке Next');
+    console.log('Click on the Next button');
     puzzleContainer.innerHTML = '';
     fetchImageFromE621();
 });
 
-console.log('Инициализация пазла');
+console.log('Initializing the puzzle');
 fetchImageFromE621();
 
 window.addEventListener('resize', () => {
     if (currentImage && !isPuzzleCompleted) {
-        console.log('Изменение размера окна, пересоздаем пазл');
+        console.log('Resize the window, recreate the puzzle');
         startPuzzle();
     } else {
-        console.log('Пазл завершен или не загружен, пропускаем resize');
+        console.log('The puzzle is completed or not loaded, skip the resize');
     }
 });
