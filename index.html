@@ -99,12 +99,28 @@
 
         <div id="settings-menu" class="dropdown-menu">
             <div class="menu-content">
-                <div class="wallpaper-preview">
-                    <img src="assets/bg/1.png" data-video="assets/bg/1.mp4" alt="1">
-                    <img src="assets/bg/2.png" data-video="assets/bg/2.mp4" alt="2">
-                    <img src="assets/bg/3.png" data-video="assets/bg/3.mp4" alt="3">
-                    <img src="assets/bg/4.png" data-video="assets/bg/4.mp4" alt="4">
-                    <img src="assets/bg/5.png" data-video="assets/bg/5.mp4" alt="5">
+                <div class="settings-section">
+                    <p>Amount pieces</p>
+                    <select id="puzzle-pieces">
+                        <option value="12">12</option>
+                        <option value="18">18</option>
+                        <option value="24">24</option>
+                    </select>
+                </div>
+                <div class="settings-section">
+                    <p>Background effects</p>
+                    <label><input type="checkbox" id="blur-effect">Blur</label>
+                    <label><input type="checkbox" id="darken-effect">Darkness</label>
+                </div>
+                <div class="settings-section">
+                    <p>Backgrounds</p>
+                    <div class="wallpaper-preview">
+                        <img src="assets/bg/1.png" data-video="assets/bg/1.mp4" alt="1">
+                        <img src="assets/bg/2.png" data-video="assets/bg/2.mp4" alt="2">
+                        <img src="assets/bg/3.png" data-video="assets/bg/3.mp4" alt="3">
+                        <img src="assets/bg/4.png" data-video="assets/bg/4.mp4" alt="4">
+                        <img src="assets/bg/5.png" data-video="assets/bg/5.mp4" alt="5">
+                    </div>
                 </div>
             </div>
         </div>

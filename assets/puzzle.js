@@ -19,7 +19,7 @@ loadingIndicator.style.cssText = `
 document.body.appendChild(loadingIndicator);
 
 const API_URL = 'https://e621.net/posts.json?limit=1&tags=';
- const PUZZLE_PIECES = 16; //12 default
+let PUZZLE_PIECES = 12;
 
 const puzzleContainer = document.createElement('div');
 puzzleContainer.id = 'puzzle-container';
@@ -111,7 +111,7 @@ async function loadBlacklistTags() {
 }
 
 async function fetchImageFromE621(attempt = 1, maxAttempts = 5) {
-    console.log('Run fetchImageFromE621, attemp:', attempt);
+    console.log('Run fetchImageFromE621, attempt:', attempt);
 
     const positiveTags = [
         ...Array.from(document.querySelectorAll('input[name="tags"]:checked')).map(cb => cb.value),
@@ -167,7 +167,6 @@ async function fetchImageFromE621(attempt = 1, maxAttempts = 5) {
         loadingIndicator.style.display = 'block';
         await preloadImage(currentImage);
         loadingIndicator.style.display = 'none';
-        await preloadImage(currentImage);
         startPuzzle();
     } catch (error) {
         console.error('Error loading image:', error);
@@ -193,18 +192,20 @@ function preloadImage(url) {
 
 function startPuzzle() {
     puzzleContainer.innerHTML = '';
-    const aspectRatio = imageWidth / imageHeight;
+    if (!currentImage) return;
 
-    let gridCols = Math.ceil(Math.sqrt(PUZZLE_PIECES * aspectRatio));
-    let gridRows = Math.ceil(PUZZLE_PIECES / gridCols);
-    while (gridCols * gridRows !== PUZZLE_PIECES) {
-        if (gridCols * gridRows > PUZZLE_PIECES) {
-            if (gridCols > gridRows) gridCols--;
-            else gridRows--;
-        } else {
-            if (gridCols < gridRows) gridCols++;
-            else gridRows++;
-        }
+    const aspectRatio = imageWidth / imageHeight;
+    let gridCols, gridRows;
+
+    if (PUZZLE_PIECES === 12) {
+        gridCols = 4;
+        gridRows = 3;
+    } else if (PUZZLE_PIECES === 18) {
+        gridCols = 6;
+        gridRows = 3;
+    } else if (PUZZLE_PIECES === 24) {
+        gridCols = 6;
+        gridRows = 4;
     }
 
     const pieceWidth = imageWidth / gridCols;
@@ -249,7 +250,7 @@ function startPuzzle() {
         puzzleContainer.appendChild(div);
     });
 
-    console.log('Исходные позиции:', originalPositions.map(pos => `${pos.x}px ${pos.y}px`));
+    console.log('Starting positions:', originalPositions.map(pos => `${pos.x}px ${pos.y}px`));
 }
 
 function shuffleArray(array) {

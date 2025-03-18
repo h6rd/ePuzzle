@@ -179,3 +179,35 @@ body {
 .wallpaper-preview img:hover {
     transform: scale(1.05);
 }
+
+.settings-section {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.settings-section p {
+    color: #fccb86;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+#puzzle-pieces {
+    width: 100%;
+    padding: 8px;
+    background-color: #2C2C2C;
+    color: #E0E0E0;
+    border: 1px solid #424242;
+    border-radius: 8px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.settings-section label {
+    display: block;
+    margin: 5px 0;
+    color: #E0E0E0;
+}
+
+.settings-section input[type="checkbox"] {
+    accent-color: #fcbf86;
+    margin-right: 5px;
+}

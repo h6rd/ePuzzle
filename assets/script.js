@@ -6,6 +6,9 @@ const playPauseButton = document.getElementById('play-pause-button');
 const volumeSlider = document.getElementById('volume-slider');
 const backgroundVideo = document.getElementById('background-video');
 const backgroundAudio = document.getElementById('background-audio');
+const puzzlePiecesSelect = document.getElementById('puzzle-pieces');
+const blurCheckbox = document.getElementById('blur-effect');
+const darkenCheckbox = document.getElementById('darken-effect');
 
 backgroundAudio.volume = 0.1;
 let isPlaying = false;
@@ -50,5 +53,28 @@ document.querySelectorAll('.wallpaper-preview img').forEach(img => {
         backgroundVideo.src = videoSrc;
         backgroundVideo.play();
         settingsMenu.classList.remove('active');
+        applyBackgroundEffects();
     });
 });
+
+puzzlePiecesSelect.addEventListener('change', () => {
+    PUZZLE_PIECES = parseInt(puzzlePiecesSelect.value);
+    if (currentImage && !isPuzzleCompleted) {
+        puzzleContainer.innerHTML = '';
+        startPuzzle();
+    }
+});
+
+function applyBackgroundEffects() {
+    let filter = '';
+    if (blurCheckbox.checked) {
+        filter += 'blur(5px) ';
+    }
+    if (darkenCheckbox.checked) {
+        filter += 'brightness(0.7)';
+    }
+    backgroundVideo.style.filter = filter.trim() || 'none';
+}
+
+blurCheckbox.addEventListener('change', applyBackgroundEffects);
+darkenCheckbox.addEventListener('change', applyBackgroundEffects);
