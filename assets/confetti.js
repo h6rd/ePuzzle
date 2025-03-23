@@ -7,7 +7,7 @@ const defaults = {
   };
   
   function shootConfetti() {
-    console.log('Запуск конфетти');
+    console.log('Run Confetti');
     function shoot() {
       confetti({
       ...defaults,
