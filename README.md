@@ -1,5 +1,5 @@
 # E621 Puzzle Game
-This is a web-based puzzle game built with JavaScript, HTML, and CSS, utilizing the e621 API to fetch images for puzzle creation. The game features drag-and-drop mechanics, customizable tags, and a visually appealing interface with animations.
+Web-based puzzle game built with JS/HTML/CSS, utilizing the e621 API to fetch images for puzzle creation. The game features drag-and-drop mechanics, customizable tags, and a visually appealing interface with animations.
 
 # Features
 + Puzzle Generation: Creates a 12-piece puzzle from random e621 images based on user-selected tags.

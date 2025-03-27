@@ -9,9 +9,44 @@ const backgroundAudio = document.getElementById('background-audio');
 const puzzlePiecesSelect = document.getElementById('puzzle-pieces');
 const blurCheckbox = document.getElementById('blur-effect');
 const darkenCheckbox = document.getElementById('darken-effect');
+const applyTagsButton = document.getElementById('apply-tags-button');
+const backButton = document.getElementById('back-button');
+const nextButtonAudio = document.getElementById('next-button-audio');
+const stationToast = document.getElementById('station-toast');
 
 backgroundAudio.volume = 0.1;
 let isPlaying = false;
+
+const radioStations = [
+    { url: 'https://streams.fluxfm.de/Chillhop/mp3-128/streams.fluxfm.de/' },
+    { url: 'https://stream.seshstation.com/radio.mp3' },
+    { url: 'http://192.95.39.65:5607/stream/1/' }
+];
+let currentStationIndex = 0;
+
+function switchRadioStation(direction) {
+    const wasPlaying = isPlaying;
+    backgroundAudio.pause();
+    playPauseButton.querySelector('.play-icon').style.display = 'block';
+    playPauseButton.querySelector('.pause-icon').style.display = 'none';
+    isPlaying = false;
+
+    if (direction === 'next') {
+        currentStationIndex = (currentStationIndex + 1) % radioStations.length;
+    } else if (direction === 'back') {
+        currentStationIndex = (currentStationIndex - 1 + radioStations.length) % radioStations.length;
+    }
+
+    backgroundAudio.src = radioStations[currentStationIndex].url;
+    backgroundAudio.load();
+
+    if (wasPlaying) {
+        backgroundAudio.play();
+        playPauseButton.querySelector('.play-icon').style.display = 'none';
+        playPauseButton.querySelector('.pause-icon').style.display = 'block';
+        isPlaying = true;
+    }
+}
 
 tagsButton.addEventListener('click', () => {
     tagsMenu.classList.toggle('active');
@@ -21,6 +56,18 @@ tagsButton.addEventListener('click', () => {
 settingsButton.addEventListener('click', () => {
     settingsMenu.classList.toggle('active');
     tagsMenu.classList.remove('active');
+});
+
+applyTagsButton.addEventListener('click', () => {
+    const wasPlaying = isPlaying;
+    document.getElementById('next-button').click();
+    tagsMenu.classList.remove('active');
+    if (wasPlaying) {
+        backgroundAudio.play();
+        playPauseButton.querySelector('.play-icon').style.display = 'none';
+        playPauseButton.querySelector('.pause-icon').style.display = 'block';
+        isPlaying = true;
+    }
 });
 
 document.addEventListener('click', (e) => {
@@ -63,6 +110,14 @@ puzzlePiecesSelect.addEventListener('change', () => {
         puzzleContainer.innerHTML = '';
         startPuzzle();
     }
+});
+
+backButton.addEventListener('click', () => {
+    switchRadioStation('back');
+});
+
+nextButtonAudio.addEventListener('click', () => {
+    switchRadioStation('next');
 });
 
 function applyBackgroundEffects() {
