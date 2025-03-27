@@ -20,7 +20,7 @@ let isPlaying = false;
 const radioStations = [
     { url: 'https://streams.fluxfm.de/Chillhop/mp3-128/streams.fluxfm.de/' },
     { url: 'https://stream.seshstation.com/radio.mp3' },
-    { url: 'https://lofi.stream.laut.fm/lofi/' }
+    { url: 'https://boxradio-edge-00.streamafrica.net/lofi' }
 ];
 let currentStationIndex = 0;
 
