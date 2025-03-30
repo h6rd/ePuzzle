@@ -12,7 +12,6 @@ const darkenCheckbox = document.getElementById('darken-effect');
 const applyTagsButton = document.getElementById('apply-tags-button');
 const backButton = document.getElementById('back-button');
 const nextButtonAudio = document.getElementById('next-button-audio');
-const stationToast = document.getElementById('station-toast');
 
 backgroundAudio.volume = 0.1;
 let isPlaying = false;
@@ -48,31 +47,35 @@ function switchRadioStation(direction) {
     }
 }
 
-tagsButton.addEventListener('click', () => {
-    tagsMenu.classList.toggle('active');
-    settingsMenu.classList.remove('active');
-});
+if (tagsButton) {
+    tagsButton.addEventListener('click', () => {
+        tagsMenu.classList.toggle('active');
+        settingsMenu.classList.remove('active');
+    });
+}
 
 settingsButton.addEventListener('click', () => {
     settingsMenu.classList.toggle('active');
-    tagsMenu.classList.remove('active');
+    if (tagsMenu) tagsMenu.classList.remove('active');
 });
 
-applyTagsButton.addEventListener('click', () => {
-    const wasPlaying = isPlaying;
-    document.getElementById('next-button').click();
-    tagsMenu.classList.remove('active');
-    if (wasPlaying) {
-        backgroundAudio.play();
-        playPauseButton.querySelector('.play-icon').style.display = 'none';
-        playPauseButton.querySelector('.pause-icon').style.display = 'block';
-        isPlaying = true;
-    }
-});
+if (applyTagsButton) {
+    applyTagsButton.addEventListener('click', () => {
+        const wasPlaying = isPlaying;
+        document.getElementById('next-button').click();
+        tagsMenu.classList.remove('active');
+        if (wasPlaying) {
+            backgroundAudio.play();
+            playPauseButton.querySelector('.play-icon').style.display = 'none';
+            playPauseButton.querySelector('.pause-icon').style.display = 'block';
+            isPlaying = true;
+        }
+    });
+}
 
 document.addEventListener('click', (e) => {
     if (!e.target.closest('.floating-bar')) {
-        tagsMenu.classList.remove('active');
+        if (tagsMenu) tagsMenu.classList.remove('active');
         settingsMenu.classList.remove('active');
     }
 });
