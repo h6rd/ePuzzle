@@ -1,5 +1,6 @@
 console.log('puzzle_bears.js loaded');
 
+// Cringe
 const imageLinks = [
     "https://dl.dropboxusercontent.com/scl/fi/lppo5kydj14e84dpky752/2.webp?rlkey=g4zqqd1zp1mrexwbro0e3r24e&dl=0",
     "https://dl.dropboxusercontent.com/scl/fi/zzh8ytsr38jwrdzf3qco1/100.webp?rlkey=jnhnver72zvsgd0r6ion9ft29&dl=0",
