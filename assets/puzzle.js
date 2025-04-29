@@ -19,9 +19,7 @@ loadingIndicator.style.cssText = `
 document.body.appendChild(loadingIndicator);
 
 const API_URL = 'https://e621.net/posts.json?limit=1&tags=';
-
-// let PUZZLE_PIECES = 12;
-let PUZZLE_PIECES = 18;
+let PUZZLE_PIECES = 12;
 
 const puzzleContainer = document.createElement('div');
 puzzleContainer.id = 'puzzle-container';

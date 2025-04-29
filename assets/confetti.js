@@ -24,7 +24,7 @@ const defaults = {
       shapes: ["emoji"],
       shapeOptions: {
         emoji: {
-          value: ["🐻", "🐺", "🦁"],
+          value: ["🐻", "🐺", "🦁", "🐶"],
         },
       },
     });
