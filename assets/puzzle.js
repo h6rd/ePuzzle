@@ -130,7 +130,7 @@ async function fetchImageFromE621(attempt = 1, maxAttempts = 5) {
     const allTags = [...positiveTags, ...negativeTags];
     const query = allTags.length > 0 ? `${allTags.join('+')}+order:random` : 'order:random';
 
-    console.log(`Попытка ${attempt}/${maxAttempts}. Запрос: ${API_URL}${query}`);
+    console.log(`Attempt ${attempt}/${maxAttempts}. Request: ${API_URL}${query}`);
 
     const username = 'ePuzzle';
     const apiKey = 'GPvryGkbnVqNzX9nLGVPJ4BY';
@@ -145,7 +145,7 @@ async function fetchImageFromE621(attempt = 1, maxAttempts = 5) {
         });
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const data = await response.json();
-        console.log('Ответ от API:', data);
+        console.log('API:', data);
 
         const post = data.posts[0];
         if (!post) {
