@@ -14,7 +14,7 @@ const defaults = {
       particleCount: 20,
       scalar: 1,
           shapes: ["circle", "polygon"],
-          colors: ["#ff6c96", "#ffc76c", "#6cffe0", "#92ff6c", "#a16cff"],
+          colors: ["#fccb86", "#b2ba76", "#ffedcb", "#b6a99a"],
     });
   
     confetti({
