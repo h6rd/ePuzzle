@@ -167,7 +167,7 @@ async function fetchImageFromE621(attempt = 1, maxAttempts = 5) {
             await delay(2000);
             return fetchImageFromE621(attempt + 1, maxAttempts);
         } else {
-            alert('Failed to load image. Please check tags or connection. Try excluding a few tags or enable VPN.');
+            alert('Failed to load image. Try excluding a few tags or check connection.');
         }
     }
 }

@@ -22,10 +22,6 @@ body {
     z-index: -1;
 }
 
-#background-audio {
-    display: none;
-}
-
 .floating-bar {
     position: fixed;
     top: 20px;
@@ -71,40 +67,6 @@ body {
 
 .floating-bar button:hover {
     background-color: rgba(252, 211, 134, 0.2);
-}
-
-.music-controls {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-#back-button,
-#next-button-audio {
-    background: none;
-    border: none;
-    padding: 8px;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #E0E0E0;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#back-button:hover,
-#next-button-audio:hover {
-    background-color: rgba(252, 211, 134, 0.2);
-}
-
-#volume-slider {
-    width: 100px;
-    accent-color: #fccf86;
-    background: rgba(56, 56, 56, 0.063);
-    border-radius: 10px;
 }
 
 .dropdown-menu {
@@ -179,6 +141,20 @@ body {
 .tag-column {
     flex: 1;
     min-width: 150px;
+}
+
+.media-type-column {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+
+.background-effects-section {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
 }
 
 .tag-column p {

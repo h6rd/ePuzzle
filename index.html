@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded">
     <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
     <script defer src="https://va.vercel-scripts.com/v1/script.js" data-sdkn="@vercel/analytics"></script>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐻</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐻</text></svg>">
     <link rel="stylesheet" href="assets/style.css">
 </head>
 
@@ -20,10 +21,6 @@
         <source src="assets/bg/1.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
-    <audio id="background-audio" loop preload="metadata">
-        <source src="https://streams.fluxfm.de/Chillhop/mp3-128/streams.fluxfm.de/" type="audio/mp3">
-        Your browser does not support the audio tag.
-    </audio>
 
     <nav class="floating-bar">
         <!-- Main Controls -->
@@ -36,23 +33,6 @@
         <button id="settings-button" title="Settings" aria-label="Open settings">
             <span class="material-symbols-rounded">settings</span>
         </button>
-        
-        <div class="divider"></div>
-        
-        <!-- Music Controls -->
-        <div class="music-controls">
-            <button id="back-button" title="Previous Station" aria-label="Previous radio station">
-                <span class="material-symbols-rounded">skip_previous</span>
-            </button>
-            <button id="play-pause-button" title="Play/Pause" aria-label="Toggle music playback">
-                <span class="material-symbols-rounded play-icon">play_arrow</span>
-                <span class="material-symbols-rounded pause-icon" style="display: none;">pause</span>
-            </button>
-            <button id="next-button-audio" title="Next Station" aria-label="Next radio station">
-                <span class="material-symbols-rounded">skip_next</span>
-            </button>
-            <input type="range" id="volume-slider" min="0" max="0.6" step="0.1" value="0.1" aria-label="Volume control">
-        </div>
 
         <!-- Tags Menu -->
         <div id="tags-menu" class="dropdown-menu">
@@ -113,20 +93,23 @@
                     <label><input type="checkbox" name="tags" value="foreskin"> Uncut</label>
                     <label><input type="checkbox" name="tags" value="circumcised"> Cut</label>
                 </div>
-                <div class="tag-column">
+                <div class="tag-column media-type-column">
                     <h3>Media Type</h3>
                     <label><input type="checkbox" name="gif-only" id="gif-only" value="type:gif"> GIF</label>
                     <label><input type="checkbox" name="tags" value="rating:safe"> SFW</label>
                     <label><input type="checkbox" name="tags" value="rating:explicit"> NSFW</label>
                 </div>
                 <div class="full-width">
-                    <input type="text" id="blacklist" placeholder="Blacklist tags (wolf, obesity)" aria-label="Blacklist tags">
-                    <input type="text" id="custom-tags" placeholder="Custom tags (bear, jockstrap)" aria-label="Custom tags">
+                    <input type="text" id="blacklist" placeholder="Blacklist tags (wolf, obesity)"
+                        aria-label="Blacklist tags">
+                    <input type="text" id="custom-tags" placeholder="Custom tags (bear, jockstrap)"
+                        aria-label="Custom tags">
                 </div>
                 <div class="full-width apply-button-container">
                     <button id="apply-tags-button">Apply</button>
                 </div>
-                <footer class="footer">This shit made by <a href="https://steamcommunity.com/id/hrdq" id="link">hrdq</a> / <a href="https://github.com/h6rd/ePuzzle/" id="link">Source code</a>
+                <footer class="footer">This shit made by <a href="https://steamcommunity.com/id/hrdq" id="link">hrdq</a>
+                    / <a href="https://github.com/h6rd/ePuzzle/" id="link">Source code</a>
                 </footer>
             </div>
         </div>
@@ -142,7 +125,7 @@
                         <option value="24">24</option>
                     </select>
                 </div>
-                <div class="settings-section">
+                <div class="settings-section background-effects-section">
                     <h3>Background Effects</h3>
                     <label><input type="checkbox" id="blur-effect"> Blur</label>
                     <label><input type="checkbox" id="darken-effect"> Darkness</label>

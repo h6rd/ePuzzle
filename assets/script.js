@@ -2,51 +2,11 @@ const tagsButton = document.getElementById('tags-button');
 const settingsButton = document.getElementById('settings-button');
 const tagsMenu = document.getElementById('tags-menu');
 const settingsMenu = document.getElementById('settings-menu');
-const playPauseButton = document.getElementById('play-pause-button');
-const volumeSlider = document.getElementById('volume-slider');
 const backgroundVideo = document.getElementById('background-video');
-const backgroundAudio = document.getElementById('background-audio');
 const puzzlePiecesSelect = document.getElementById('puzzle-pieces');
 const blurCheckbox = document.getElementById('blur-effect');
 const darkenCheckbox = document.getElementById('darken-effect');
 const applyTagsButton = document.getElementById('apply-tags-button');
-const backButton = document.getElementById('back-button');
-const nextButtonAudio = document.getElementById('next-button-audio');
-const stationToast = document.getElementById('station-toast');
-
-backgroundAudio.volume = 0.1;
-let isPlaying = false;
-
-const radioStations = [
-    { url: 'https://streams.fluxfm.de/Chillhop/mp3-128/streams.fluxfm.de/' },
-    { url: 'https://stream.seshstation.com/radio.mp3' },
-    { url: 'https://boxradio-edge-00.streamafrica.net/lofi' }
-];
-let currentStationIndex = 0;
-
-function switchRadioStation(direction) {
-    const wasPlaying = isPlaying;
-    backgroundAudio.pause();
-    playPauseButton.querySelector('.play-icon').style.display = 'block';
-    playPauseButton.querySelector('.pause-icon').style.display = 'none';
-    isPlaying = false;
-
-    if (direction === 'next') {
-        currentStationIndex = (currentStationIndex + 1) % radioStations.length;
-    } else if (direction === 'back') {
-        currentStationIndex = (currentStationIndex - 1 + radioStations.length) % radioStations.length;
-    }
-
-    backgroundAudio.src = radioStations[currentStationIndex].url;
-    backgroundAudio.load();
-
-    if (wasPlaying) {
-        backgroundAudio.play();
-        playPauseButton.querySelector('.play-icon').style.display = 'none';
-        playPauseButton.querySelector('.pause-icon').style.display = 'block';
-        isPlaying = true;
-    }
-}
 
 tagsButton.addEventListener('click', () => {
     tagsMenu.classList.toggle('active');
@@ -59,15 +19,8 @@ settingsButton.addEventListener('click', () => {
 });
 
 applyTagsButton.addEventListener('click', () => {
-    const wasPlaying = isPlaying;
     document.getElementById('next-button').click();
     tagsMenu.classList.remove('active');
-    if (wasPlaying) {
-        backgroundAudio.play();
-        playPauseButton.querySelector('.play-icon').style.display = 'none';
-        playPauseButton.querySelector('.pause-icon').style.display = 'block';
-        isPlaying = true;
-    }
 });
 
 document.addEventListener('click', (e) => {
@@ -75,23 +28,6 @@ document.addEventListener('click', (e) => {
         tagsMenu.classList.remove('active');
         settingsMenu.classList.remove('active');
     }
-});
-
-playPauseButton.addEventListener('click', () => {
-    if (isPlaying) {
-        backgroundAudio.pause();
-        playPauseButton.querySelector('.play-icon').style.display = 'block';
-        playPauseButton.querySelector('.pause-icon').style.display = 'none';
-    } else {
-        backgroundAudio.play();
-        playPauseButton.querySelector('.play-icon').style.display = 'none';
-        playPauseButton.querySelector('.pause-icon').style.display = 'block';
-    }
-    isPlaying = !isPlaying;
-});
-
-volumeSlider.addEventListener('input', (e) => {
-    backgroundAudio.volume = e.target.value;
 });
 
 document.querySelectorAll('.wallpaper-preview img').forEach(img => {
@@ -112,14 +48,6 @@ puzzlePiecesSelect.addEventListener('change', () => {
     }
 });
 
-backButton.addEventListener('click', () => {
-    switchRadioStation('back');
-});
-
-nextButtonAudio.addEventListener('click', () => {
-    switchRadioStation('next');
-});
-
 function applyBackgroundEffects() {
     let filter = '';
     if (blurCheckbox.checked) {
@@ -130,6 +58,7 @@ function applyBackgroundEffects() {
     }
     backgroundVideo.style.filter = filter.trim() || 'none';
 }
+
 
 blurCheckbox.addEventListener('change', applyBackgroundEffects);
 darkenCheckbox.addEventListener('change', applyBackgroundEffects);
