@@ -1,3 +1,5 @@
+console.log('puzzle.js loaded');
+
 const loadingIndicator = document.createElement('div');
 loadingIndicator.id = 'loading-indicator';
 loadingIndicator.style.cssText = `
@@ -86,31 +88,31 @@ let imageHeight = 0;
 let isPuzzleCompleted = false;
 let originalPositions = [];
 let originalImageName = null;
-let cachedBlacklist = null;
 
-const safeBtoa = str => btoa(unescape(encodeURIComponent(str)));
+function safeBtoa(str) {
+    return btoa(unescape(encodeURIComponent(str)));
+}
 
 async function loadBlacklistTags() {
-    if (cachedBlacklist) return cachedBlacklist;
-    
     try {
         const response = await fetch('assets/blacklist.txt');
         if (!response.ok) throw new Error('Failed to load blacklist.txt');
         const text = await response.text();
-        cachedBlacklist = text.split('\n')
+        const tags = text.split('\n')
             .map(tag => tag.trim())
             .filter(tag => tag.length > 0)
             .map(tag => `-${tag}`);
-        return cachedBlacklist;
+        console.log('Blacklist tags from file:', tags);
+        return tags;
     } catch (error) {
-        cachedBlacklist = [];
+        console.error('Failed to load blacklist.txt:', error);
         return [];
     }
 }
 
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-
 async function fetchImageFromE621(attempt = 1, maxAttempts = 5) {
+    console.log('Run fetchImageFromE621, attempt:', attempt);
+
     const positiveTags = [
         ...Array.from(document.querySelectorAll('input[name="tags"]:checked')).map(cb => cb.value),
         ...document.getElementById('custom-tags').value.split(',').map(t => t.trim()).filter(t => t),
@@ -128,6 +130,8 @@ async function fetchImageFromE621(attempt = 1, maxAttempts = 5) {
     const allTags = [...positiveTags, ...negativeTags];
     const query = allTags.length > 0 ? `${allTags.join('+')}+order:random` : 'order:random';
 
+    console.log(`Attempt ${attempt}/${maxAttempts}. Request: ${API_URL}${query}`);
+
     const username = 'ePuzzle';
     const apiKey = 'GPvryGkbnVqNzX9nLGVPJ4BY';
     const auth = safeBtoa(`${username}:${apiKey}`);
@@ -141,14 +145,16 @@ async function fetchImageFromE621(attempt = 1, maxAttempts = 5) {
         });
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const data = await response.json();
+        console.log('API:', data);
 
         const post = data.posts[0];
         if (!post) {
             if (attempt < maxAttempts) {
-                await delay(2000);
+                console.log('No posts found, please try again...');
+                await new Promise(resolve => setTimeout(resolve, 2000));
                 return fetchImageFromE621(attempt + 1, maxAttempts);
             } else {
-                throw new Error('No posts found after maximum attempts');
+                throw new Error('Attempt limit reached: no posts found');
             }
         }
         
@@ -163,34 +169,41 @@ async function fetchImageFromE621(attempt = 1, maxAttempts = 5) {
         loadingIndicator.style.display = 'none';
         startPuzzle();
     } catch (error) {
+        console.error('Error loading image:', error);
         if (attempt < maxAttempts) {
-            await delay(2000);
+            console.log(`Attempt ${attempt} failed, repeat after 2 seconds...`);
+            await new Promise(resolve => setTimeout(resolve, 2000));
             return fetchImageFromE621(attempt + 1, maxAttempts);
         } else {
-            alert('Failed to load image. Please check tags or connection.');
+            console.error('Attempts are exhausted. Check the tags or API.');
+            alert('The image could not be uploaded. Check the tags or connection.');
         }
     }
 }
 
-const preloadImage = url => new Promise((resolve, reject) => {
-    const img = new Image();
-    img.src = url;
-    img.onload = resolve;
-    img.onerror = reject;
-});
+function preloadImage(url) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = resolve;
+        img.onerror = reject;
+    });
+}
 
 function startPuzzle() {
     puzzleContainer.innerHTML = '';
     if (!currentImage) return;
 
+    const aspectRatio = imageWidth / imageHeight;
     let gridCols, gridRows;
+
     if (PUZZLE_PIECES === 12) {
         gridCols = 4;
         gridRows = 3;
     } else if (PUZZLE_PIECES === 18) {
         gridCols = 6;
         gridRows = 3;
-    } else {
+    } else if (PUZZLE_PIECES === 24) {
         gridCols = 6;
         gridRows = 4;
     }
@@ -219,31 +232,33 @@ function startPuzzle() {
     const indices = Array.from({ length: PUZZLE_PIECES }, (_, i) => i);
     shuffleArray(indices);
 
-    const fragment = document.createDocumentFragment();
     pieces.forEach((piece, i) => {
         const div = document.createElement('div');
         div.className = 'puzzle-piece';
         div.draggable = true;
-        div.style.cssText = `
-            background-image: url(${currentImage});
-            background-size: ${imageWidth * scale}px ${imageHeight * scale}px;
-            background-position: ${pieces[indices[i]].x * scale}px ${pieces[indices[i]].y * scale}px;
-        `;
+        div.style.backgroundImage = `url(${currentImage})`;
+        div.style.backgroundSize = `${imageWidth * scale}px ${imageHeight * scale}px`;
+        const shuffledIndex = indices[i];
+        div.style.backgroundPosition = `${pieces[shuffledIndex].x * scale}px ${pieces[shuffledIndex].y * scale}px`;
         div.addEventListener('dragstart', dragStart);
         div.addEventListener('dragover', dragOver);
         div.addEventListener('dragend', dragEnd);
         div.addEventListener('drop', drop);
-        fragment.appendChild(div);
+        if (isPuzzleSolved()) {
+            div.style.border = 'none';
+        }
+        puzzleContainer.appendChild(div);
     });
-    puzzleContainer.appendChild(fragment);
+
+    console.log('Starting positions:', originalPositions.map(pos => `${pos.x}px ${pos.y}px`));
 }
 
-const shuffleArray = array => {
+function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
-};
+}
 
 let draggedPiece = null;
 
@@ -251,11 +266,16 @@ function dragStart(e) {
     draggedPiece = e.target;
     draggedPiece.classList.add('dragging');
     e.dataTransfer.setData('text/plain', draggedPiece.style.backgroundPosition);
+    console.log('Drag start, position:', draggedPiece.style.backgroundPosition);
 }
 
-const dragOver = e => e.preventDefault();
+function dragOver(e) {
+    e.preventDefault();
+}
 
-const dragEnd = e => e.target.classList.remove('dragging');
+function dragEnd(e) {
+    e.target.classList.remove('dragging');
+}
 
 function drop(e) {
     e.preventDefault();
@@ -265,29 +285,56 @@ function drop(e) {
         draggedPiece.style.backgroundPosition = dropTarget.style.backgroundPosition;
         dropTarget.style.backgroundPosition = tempPos;
 
+        console.log('After dragging:', {
+            dragged: draggedPiece.style.backgroundPosition,
+            target: dropTarget.style.backgroundPosition
+        });
+
         if (isPuzzleSolved()) {
+            console.log('The puzzle is complete');
             showCompletionAnimation();
+        } else {
+            console.log('The puzzle has not been completed yet');
         }
     }
 }
 
 function isPuzzleSolved() {
     const pieces = Array.from(puzzleContainer.children);
-    const tolerance = 0.1;
-    
-    return pieces.every((piece, index) => {
-        const [currX, currY] = piece.style.backgroundPosition.split(' ').map(val => 
-            parseFloat(val.replace('px', ''))
-        );
-        const { x: origX, y: origY } = originalPositions[index];
-        return Math.abs(origX - currX) <= tolerance && Math.abs(origY - currY) <= tolerance;
+    const currentPositions = pieces.map(piece => {
+        let [x, y] = piece.style.backgroundPosition.split(' ').map(val => {
+            return parseFloat(val.replace('px', '')).toFixed(3);
+        });
+        return { x: parseFloat(x), y: parseFloat(y) };
     });
+
+    const normalizedOriginalPositions = originalPositions.map(pos => ({
+        x: parseFloat(pos.x.toFixed(3)),
+        y: parseFloat(pos.y.toFixed(3))
+    }));
+
+    const tolerance = 0.1;
+    const solved = pieces.every((piece, index) => {
+        const currX = parseFloat(piece.style.backgroundPosition.split(' ')[0].replace('px', '')).toFixed(3);
+        const currY = parseFloat(piece.style.backgroundPosition.split(' ')[1].replace('px', '')).toFixed(3);
+        const origX = normalizedOriginalPositions[index].x;
+        const origY = normalizedOriginalPositions[index].y;
+        const xMatch = Math.abs(origX - parseFloat(currX)) <= tolerance;
+        const yMatch = Math.abs(origY - parseFloat(currY)) <= tolerance;
+        if (!xMatch || !yMatch) {
+            console.log(`Inconsistency on the piece ${index}: current position=${piece.style.backgroundPosition}, expected=${origX}px ${origY}px`);
+        }
+        return xMatch && yMatch;
+    });
+
+    console.log('Checking the completion of the puzzle:', solved);
+    return solved;
 }
 
 function showCompletionAnimation() {
+    console.log('Starting the completion animation');
     isPuzzleCompleted = true;
     shootConfetti();
-    
     const completeDiv = document.createElement('div');
     completeDiv.className = 'puzzle-complete';
     completeDiv.innerHTML = `
@@ -295,23 +342,37 @@ function showCompletionAnimation() {
         <button id="next-puzzle">Next</button>
     `;
     puzzleContainer.appendChild(completeDiv);
+    console.log('Added div.puzzle-complete');
 
-    Array.from(puzzleContainer.getElementsByClassName('puzzle-piece')).forEach(piece => {
-        piece.style.border = 'none';
-    });
+    if (isPuzzleCompleted) {
+        const pieces = puzzleContainer.getElementsByClassName('puzzle-piece');
+        for (let piece of pieces) {
+            piece.style.border = 'none';
+        }
+    }
 
     setTimeout(() => {
         completeDiv.style.opacity = '1';
-        
-        document.getElementById('save-puzzle').addEventListener('click', savePuzzle);
-        document.getElementById('next-puzzle').addEventListener('click', () => {
+        console.log('Buttons opacity: 1');
+    }, 3000);
+
+    const saveButton = document.getElementById('save-puzzle');
+    const nextButton = document.getElementById('next-puzzle');
+    if (saveButton && nextButton) {
+        saveButton.addEventListener('click', savePuzzle);
+        nextButton.addEventListener('click', () => {
+            console.log('Moving on to the next puzzle');
             puzzleContainer.innerHTML = '';
             fetchImageFromE621();
         });
-    }, 3000);
+        console.log('Event handlers for buttons are linked');
+    } else {
+        console.error('Buttons not found in DOM');
+    }
 }
 
 function savePuzzle() {
+    console.log('Downloading an image:', originalImageName);
     const link = document.createElement('a');
     link.href = currentImage;
     link.download = originalImageName;
@@ -319,23 +380,31 @@ function savePuzzle() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    console.log('Initiated downloading or opening in a new tab:', originalImageName);
 
     setTimeout(() => {
         if (document.location.href.includes(currentImage)) {
-            alert('Image opened in new tab. Right-click and select "Save as" to download.');
+            alert('Open the image in a new tab. Right-click and select "Save as" to download.');
+        } else {
+            console.log('Download successfully initiated');
         }
     }, 100);
 }
 
 document.getElementById('next-button').addEventListener('click', () => {
+    console.log('Click on the Next button');
     puzzleContainer.innerHTML = '';
     fetchImageFromE621();
 });
 
+console.log('Initializing the puzzle');
 fetchImageFromE621();
 
 window.addEventListener('resize', () => {
     if (currentImage && !isPuzzleCompleted) {
+        console.log('Resize the window, recreate the puzzle');
         startPuzzle();
+    } else {
+        console.log('The puzzle is completed or not loaded, skip the resize');
     }
 });
