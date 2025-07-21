@@ -7,7 +7,7 @@ loadingIndicator.style.cssText = `
     transform: translate(-50%, -50%);
     width: 50px;
     height: 50px;
-    border: 5px solid rgba(255, 255, 255, 0.3);
+    border: 5px solid rgba(255, 255, 255, 0.23);
     border-top: 5px solid #fff;
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -36,7 +36,7 @@ style.textContent = `
         left: 50%;
         transform: translate(-50%, -50%);
         display: grid;
-        background: rgba(30, 30, 30, 0.566);
+        background: rgba(30, 30, 30, 0.325);
         backdrop-filter: blur(10px);
         border-radius: 16px;
         padding: 10px;
