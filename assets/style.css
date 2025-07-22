@@ -72,15 +72,15 @@ body {
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 70px;
+    top: 95px;
     left: 50%;
     transform: translateX(-50%);
-    background: #181818e9;
+    background: rgba(30, 30, 30, 0.400);
+    backdrop-filter: blur(10px);
     border-radius: 16px;
     padding: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.308);
     z-index: 20;
-/*     width: 600px; */
     width: 850px;
     max-height: none;
     overflow-y: hidden;
@@ -88,6 +88,19 @@ body {
 
 .dropdown-menu.active {
     display: block;
+    animation: fadeInScale 0.2s ease-out;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
 }
 
 .menu-content {
@@ -136,6 +149,7 @@ body {
 .tag-column label:hover:before,
 .settings-section label:hover:before {
     border-color: #fccf86;
+    box-shadow: 0 0 5px #ffd684;
 }
 
 .tag-column {
@@ -200,7 +214,7 @@ body {
     color: #121212;
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
-    cursor: pointer;
+    cursor: pointer;    
     min-width: 100px;
     transition: background 0.3s;
 }
@@ -234,7 +248,8 @@ body {
 }
 
 .wallpaper-preview img:hover {
-    transform: scale(1.05);
+    transform: scale(1.06);
+    box-shadow: 0 0 5px #ffd684;
 }
 
 .settings-section {

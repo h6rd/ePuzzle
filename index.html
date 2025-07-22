@@ -11,8 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded">
     <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
     <script defer src="https://va.vercel-scripts.com/v1/script.js" data-sdkn="@vercel/analytics"></script>
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐻</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐻</text></svg>">
     <link rel="stylesheet" href="assets/style.css">
 </head>
 
@@ -23,7 +22,6 @@
     </video>
 
     <nav class="floating-bar">
-        <!-- Main Controls -->
         <button id="tags-button" title="Tags" aria-label="Open tags menu">
             <span class="material-symbols-rounded">bookmark</span>
         </button>
@@ -33,117 +31,115 @@
         <button id="settings-button" title="Settings" aria-label="Open settings">
             <span class="material-symbols-rounded">settings</span>
         </button>
-
-        <!-- Tags Menu -->
-        <div id="tags-menu" class="dropdown-menu">
-            <div class="menu-content">
-                <div class="tag-column">
-                    <h3>Species</h3>
-                    <label><input type="checkbox" name="tags" value="bear"> Bear</label>
-                    <label><input type="checkbox" name="tags" value="boar"> Boar</label>
-                    <label><input type="checkbox" name="tags" value="bull"> Bull</label>
-                    <label><input type="checkbox" name="tags" value="canid"> Wolf/Dog</label>
-                    <label><input type="checkbox" name="tags" value="felid"> Tiger/Lion/Cat</label>
-                    <label><input type="checkbox" name="tags" value="elephant"> Elephant</label>
-                    <label><input type="checkbox" name="tags" value="dragon"> Dragon</label>
-                    <label><input type="checkbox" name="tags" value="horse"> Horse</label>
-                </div>
-                <div class="tag-column">
-                    <h3>Attributes</h3>
-                    <label><input type="checkbox" name="tags" value="belly"> Belly</label>
-                    <label><input type="checkbox" name="tags" value="fat"> Fat</label>
-                    <label><input type="checkbox" name="tags" value="musclegut" checked> Musclegut</label>
-                    <label><input type="checkbox" name="tags" value="underwear"> Underwear</label>
-                    <label><input type="checkbox" name="tags" value="jockstrap"> Jockstrap</label>
-                    <label><input type="checkbox" name="tags" value="tank_top"> Tank Top</label>
-                    <label><input type="checkbox" name="tags" value="socks"> Socks</label>
-                    <label><input type="checkbox" name="tags" value="open_bottomwear"> Open Bottomwear</label>
-                </div>
-                <div class="tag-column">
-                    <h3>Fetishes</h3>
-                    <label><input type="checkbox" name="tags" value="urine"> Urine</label>
-                    <label><input type="checkbox" name="tags" value="bulge"> Bulge</label>
-                    <label><input type="checkbox" name="tags" value="messy"> Messy</label>
-                    <label><input type="checkbox" name="tags" value="armpit_hair"> Armpit hair</label>
-                    <label><input type="checkbox" name="tags" value="licking"> Licking</label>
-                    <label><input type="checkbox" name="tags" value="fellatio"> Blowjob</label>
-                    <label><input type="checkbox" name="tags" value="footjob"> Footjob</label>
-                    <label><input type="checkbox" name="tags" value="sniffing"> Sniffing</label>
-                    <label><input type="checkbox" name="tags" value="age_difference"> Age difference</label>
-                    <label><input type="checkbox" name="tags" value="size_difference"> Size difference</label>
-                </div>
-                <div class="tag-column">
-                    <h3>Other</h3>
-                    <label><input type="checkbox" name="tags" value="male" checked> Male</label>
-                    <label><input type="checkbox" name="tags" value="anthro"> Anthro</label>
-                    <label><input type="checkbox" name="tags" value="father_(lore)"> Father Lore</label>
-                    <label><input type="checkbox" name="tags" value="father_and_son_(lore)"> Father and son</label>
-                    <label><input type="checkbox" name="tags" value="incest_(lore)"> Incest</label>
-                    <label><input type="checkbox" name="tags" value="mature_male"> Mature</label>
-                    <label><input type="checkbox" name="tags" value="saliva"> Saliva</label>
-                    <label><input type="checkbox" name="tags" value="hairy"> Hairy</label>
-                    <label><input type="checkbox" name="tags" value="chastity_device"> Cage</label>
-                </div>
-                <div class="tag-column">
-                    <h3>Penis Type</h3>
-                    <label><input type="checkbox" name="tags" value="canine_penis"> Wolf/Dog</label>
-                    <label><input type="checkbox" name="tags" value="knot"> Knot</label>
-                    <label><input type="checkbox" name="tags" value="equine_penis"> Horse</label>
-                    <label><input type="checkbox" name="tags" value="humanoid_genitalia"> Human</label>
-                    <label><input type="checkbox" name="tags" value="foreskin"> Uncut</label>
-                    <label><input type="checkbox" name="tags" value="circumcised"> Cut</label>
-                </div>
-                <div class="tag-column media-type-column">
-                    <h3>Media Type:</h3>
-                    <label><input type="checkbox" name="gif-only" id="gif-only" value="type:gif">GIF</label>
-                    <label><input type="checkbox" name="tags" value="rating:safe">SFW</label>
-                    <label><input type="checkbox" name="tags" value="rating:explicit">NSFW</label>
-                </div>
-                <div class="full-width">
-                    <input type="text" id="blacklist" placeholder="Blacklist tags (wolf, obesity)"
-                        aria-label="Blacklist tags">
-                    <input type="text" id="custom-tags" placeholder="Custom tags (bear, jockstrap)"
-                        aria-label="Custom tags">
-                </div>
-                <div class="full-width apply-button-container">
-                    <button id="apply-tags-button">Apply</button>
-                </div>
-                <footer class="footer">This shit made by <a href="https://steamcommunity.com/id/hrdq" id="link">hrdq</a>
-                    / <a href="https://github.com/h6rd/ePuzzle/" id="link">Source code</a>
-                </footer>
-            </div>
-        </div>
-
-        <!-- Settings Menu -->
-        <div id="settings-menu" class="dropdown-menu">
-            <div class="menu-content">
-                <div class="settings-section">
-                    <h3>Amount Pieces</h3>
-                    <select id="puzzle-pieces" aria-label="Select number of puzzle pieces">
-                        <option value="12">12</option>
-                        <option value="18">18</option>
-                        <option value="24">24</option>
-                    </select>
-                </div>
-                <div class="settings-section background-effects-section">
-                    <h3>Background Effects</h3>
-                    <label><input type="checkbox" id="blur-effect"> Blur</label>
-                    <label><input type="checkbox" id="darken-effect"> Darkness</label>
-                </div>
-                <div class="settings-section">
-                    <h3>Backgrounds</h3>
-                    <div class="wallpaper-preview">
-                        <img src="assets/bg/1.webp" data-video="assets/bg/1.mp4" alt="Background 1" loading="lazy">
-                        <img src="assets/bg/2.webp" data-video="assets/bg/2.mp4" alt="Background 2" loading="lazy">
-                        <img src="assets/bg/3.webp" data-video="assets/bg/3.mp4" alt="Background 3" loading="lazy">
-                        <img src="assets/bg/4.webp" data-video="assets/bg/4.mp4" alt="Background 4" loading="lazy">
-                        <img src="assets/bg/5.webp" data-video="assets/bg/5.mp4" alt="Background 5" loading="lazy">
-                    </div>
-                </div>
-            </div>
-        </div>
     </nav>
-
+    <div id="tags-menu" class="dropdown-menu">
+        <div class="menu-content">
+            <div class="tag-column">
+                <h3>Species</h3>
+                <label><input type="checkbox" name="tags" value="bear"> Bear</label>
+                <label><input type="checkbox" name="tags" value="boar"> Boar</label>
+                <label><input type="checkbox" name="tags" value="bull"> Bull</label>
+                <label><input type="checkbox" name="tags" value="canid"> Wolf/Dog</label>
+                <label><input type="checkbox" name="tags" value="felid"> Tiger/Lion/Cat</label>
+                <label><input type="checkbox" name="tags" value="elephant"> Elephant</label>
+                <label><input type="checkbox" name="tags" value="dragon"> Dragon</label>
+                <label><input type="checkbox" name="tags" value="horse"> Horse</label>
+            </div>
+            <div class="tag-column">
+                <h3>Attributes</h3>
+                <label><input type="checkbox" name="tags" value="belly"> Belly</label>
+                <label><input type="checkbox" name="tags" value="fat"> Fat</label>
+                <label><input type="checkbox" name="tags" value="musclegut" checked> Musclegut</label>
+                <label><input type="checkbox" name="tags" value="underwear"> Underwear</label>
+                <label><input type="checkbox" name="tags" value="jockstrap"> Jockstrap</label>
+                <label><input type="checkbox" name="tags" value="tank_top"> Tank Top</label>
+                <label><input type="checkbox" name="tags" value="socks"> Socks</label>
+                <label><input type="checkbox" name="tags" value="open_bottomwear"> Open Bottomwear</label>
+            </div>
+            <div class="tag-column">
+                <h3>Fetishes</h3>
+                <label><input type="checkbox" name="tags" value="urine"> Urine</label>
+                <label><input type="checkbox" name="tags" value="bulge"> Bulge</label>
+                <label><input type="checkbox" name="tags" value="messy"> Messy</label>
+                <label><input type="checkbox" name="tags" value="armpit_hair"> Armpit hair</label>
+                <label><input type="checkbox" name="tags" value="licking"> Licking</label>
+                <label><input type="checkbox" name="tags" value="fellatio"> Blowjob</label>
+                <label><input type="checkbox" name="tags" value="footjob"> Footjob</label>
+                <label><input type="checkbox" name="tags" value="sniffing"> Sniffing</label>
+                <label><input type="checkbox" name="tags" value="age_difference"> Age difference</label>
+                <label><input type="checkbox" name="tags" value="size_difference"> Size difference</label>
+            </div>
+            <div class="tag-column">
+                <h3>Other</h3>
+                <label><input type="checkbox" name="tags" value="male" checked> Male</label>
+                <label><input type="checkbox" name="tags" value="anthro"> Anthro</label>
+                <label><input type="checkbox" name="tags" value="father_(lore)"> Father Lore</label>
+                <label><input type="checkbox" name="tags" value="father_and_son_(lore)"> Father and son</label>
+                <label><input type="checkbox" name="tags" value="incest_(lore)"> Incest</label>
+                <label><input type="checkbox" name="tags" value="mature_male"> Mature</label>
+                <label><input type="checkbox" name="tags" value="saliva"> Saliva</label>
+                <label><input type="checkbox" name="tags" value="hairy"> Hairy</label>
+                <label><input type="checkbox" name="tags" value="chastity_device"> Cage</label>
+            </div>
+            <div class="tag-column">
+                <h3>Penis Type</h3>
+                <label><input type="checkbox" name="tags" value="canine_penis"> Wolf/Dog</label>
+                <label><input type="checkbox" name="tags" value="knot"> Knot</label>
+                <label><input type="checkbox" name="tags" value="equine_penis"> Horse</label>
+                <label><input type="checkbox" name="tags" value="humanoid_genitalia"> Human</label>
+                <label><input type="checkbox" name="tags" value="foreskin"> Uncut</label>
+                <label><input type="checkbox" name="tags" value="circumcised"> Cut</label>
+            </div>
+            <div class="tag-column media-type-column">
+                <h3>Things:</h3>
+                <label><input type="checkbox" name="gif-only" id="gif-only" value="type:gif">GIF</label>
+                <label><input type="checkbox" name="tags" value="rating:safe">SFW</label>
+                <label><input type="checkbox" name="tags" value="rating:explicit">NSFW</label>
+                <label><input type="checkbox" name="random" id="random">Random Tags</label>
+            </div>
+            <div class="full-width">
+                <input type="text" id="blacklist" placeholder="Blacklist tags (wolf, obesity)"
+                    aria-label="Blacklist tags">
+                <input type="text" id="custom-tags" placeholder="Custom tags (bear, jockstrap)"
+                    aria-label="Custom tags">
+            </div>
+            <div class="full-width apply-button-container">
+                <button id="apply-tags-button">Apply</button>
+            </div>
+            <footer class="footer">This shit made by <a href="https://steamcommunity.com/id/hrdq" id="link">hrdq</a>
+                / <a href="https://github.com/h6rd/ePuzzle/" id="link">Source code</a>
+            </footer>
+        </div>
+    </div>
+    <div id="settings-menu" class="dropdown-menu">
+        <div class="menu-content">
+            <div class="settings-section">
+                <h3>Amount Pieces</h3>
+                <select id="puzzle-pieces" aria-label="Select number of puzzle pieces">
+                    <option value="12">12</option>
+                    <option value="18">18</option>
+                    <option value="24">24</option>
+                </select>
+            </div>
+            <div class="settings-section background-effects-section">
+                <h3>Background Effects</h3>
+                <label><input type="checkbox" id="blur-effect"> Blur</label>
+                <label><input type="checkbox" id="darken-effect"> Darkness</label>
+            </div>
+            <div class="settings-section">
+                <h3>Backgrounds</h3>
+                <div class="wallpaper-preview">
+                    <img src="assets/bg/1.webp" data-video="assets/bg/1.mp4" alt="Background 1" loading="lazy">
+                    <img src="assets/bg/2.webp" data-video="assets/bg/2.mp4" alt="Background 2" loading="lazy">
+                    <img src="assets/bg/3.webp" data-video="assets/bg/3.mp4" alt="Background 3" loading="lazy">
+                    <img src="assets/bg/4.webp" data-video="assets/bg/4.mp4" alt="Background 4" loading="lazy">
+                    <img src="assets/bg/5.webp" data-video="assets/bg/5.mp4" alt="Background 5" loading="lazy">
+                    <img src="assets/bg/6.webp" data-video="assets/bg/6.mp4" alt="Background 6" loading="lazy">
+                    <img src="assets/bg/7.webp" data-video="assets/bg/7.mp4" alt="Background 7" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="assets/script.js"></script>
     <script src="assets/puzzle.js"></script>
     <script src="assets/confetti.js"></script>
