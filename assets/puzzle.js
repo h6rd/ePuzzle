@@ -111,30 +111,6 @@ async function loadBlacklistTags() {
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 async function fetchImageFromE621(attempt = 1, maxAttempts = 5) {
-    if (document.getElementById('random') && document.getElementById('random').checked) {
-        document.querySelectorAll('input[name="tags"]').forEach(checkbox => {
-            checkbox.checked = false;
-        });
-
-        const tagColumns = {
-            species: ['bear', 'boar', 'bull', 'canid', 'felid', 'elephant', 'dragon', 'horse'],
-            attributes: ['belly', 'fat', 'musclegut', 'underwear', 'jockstrap', 'tank_top', 'socks', 'open_bottomwear'],
-            fetishes: ['urine', 'bulge', 'messy', 'armpit_hair', 'licking', 'fellatio', 'footjob', 'sniffing', 'age_difference', 'size_difference'],
-            other: ['male', 'anthro', 'father_(lore)', 'father_and_son_(lore)', 'incest_(lore)', 'mature_male', 'saliva', 'hairy', 'chastity_device'],
-            penisType: ['canine_penis', 'knot', 'equine_penis', 'humanoid_genitalia', 'foreskin', 'circumcised']
-        };
-
-        Object.values(tagColumns).forEach(column => {
-            const randomTag = column[Math.floor(Math.random() * column.length)];
-            const checkbox = document.querySelector(`input[name="tags"][value="${randomTag}"]`);
-            if (checkbox) {
-                checkbox.checked = true;
-            }
-        });
-
-        document.getElementById('custom-tags').value = '';
-    }
-
     const positiveTags = [
         ...Array.from(document.querySelectorAll('input[name="tags"]:checked')).map(cb => cb.value),
         ...document.getElementById('custom-tags').value.split(',').map(t => t.trim()).filter(t => t),
